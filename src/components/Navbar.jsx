@@ -18,6 +18,7 @@ const Navbar = () => {
 
             <div className="w-full h-auto bg-customBlue min-h-[45px] flex flex-row justify-between px-28 lg:px-52 items-center">
                 <div className="text-white">{formattedDate}</div>
+                
                 <div className="flex flex-row gap-4">
                     <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="bg-white rounded-full p-2">
                         <FaInstagram className="hover:text-pink-500 transition" />
@@ -26,6 +27,8 @@ const Navbar = () => {
                         <FaFacebook className="hover:text-blue-600 transition" />
                     </a>
                 </div>
+
+
             </div>
         </div>
     </div>

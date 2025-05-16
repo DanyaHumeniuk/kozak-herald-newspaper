@@ -1,9 +1,14 @@
+import { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 import header from "../assets/header-photo.png"
 import kozak from "../assets/kozakLogo.png"
 import { LINKS } from "../constants"
 import { FaInstagram, FaFacebook, FaSearch } from "react-icons/fa"
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
+
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const today = new Date();
     const formattedDate = today.toLocaleDateString("en-GB", {
@@ -35,25 +40,55 @@ const Navbar = () => {
 
                 <div className="flex flex-row gap-2">
                     <img src={kozak} alt="Kozak Logo" className="h-auto w-auto max-h-[80px] max-w-[80px] lg:max-h-[140px] lg:max-w-[140px]"/>
-                    <div className="flex flex-col justify-center sm:max-w-[250px] lg:max-w-[300px]">
+                    <div className="flex flex-col justify-center max-w-[300px]">
                         <p className="font-extrabold text-lg lg:text-3xl">Козацький Вісник</p>
                         <p className="text-sm">Kozak Herald: Ukrainian Spirit, Island Home</p>
                     </div>
                 </div>
                 
 
-                <div className="flex flex-row justify-evenly items-center">
+                <div className="hidden lg:flex flex-row justify-evenly items-center lg:ml-56">
                     {LINKS.map((link, index) => (
                         <div key={index} className="mr-4">
-                            <div className="text-base sm:text-sm lg:text-lg">{link.name}</div>
+                            <div className="text-base sm:text-sm lg:text-lg cursor-pointer">{link.name}</div>
                         </div>
                     ))}
-                    <div className="mx-4 lg:mx-6 scale-75 lg:scale-95">
+                </div>
+
+                <div className="flex flex-row gap-4">
+                    <div className="lg:hidden scale-75 text-gray-600 hover:text-black cursor-pointer" onClick={() => setMenuOpen(!menuOpen)}>
+                        {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+                    </div>
+
+                    <div className="scale-75 lg:scale-95">
                         <FaSearch className="text-xl text-gray-600 hover:text-black cursor-pointer" />
                     </div>
+
                 </div>
 
             </div>
+
+            <AnimatePresence>
+                {menuOpen && (
+                    <motion.div initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.5 }} className="flex flex-col items-center bg-white py-4 border-b-2 border-gray-400 lg:hidden">
+                        {LINKS.map((link, index) => (
+                        <a
+                            key={index}
+                            href={link.link}
+                            className="py-2 text-sm"
+                        >
+                            {link.name}
+                        </a>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            
+
         </div>
     </div>
   )
